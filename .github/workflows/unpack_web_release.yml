@@ -35,7 +35,6 @@ jobs:
           test -f flutter.js
           test -f flutter_bootstrap.js
           test -f flutter_service_worker.js
-          # Türkçeleşmiş dosya adlari varsa canonical adlara kopyala.
           if [ -f ana.dart.js ] && [ ! -f main.dart.js ]; then cp ana.dart.js main.dart.js; fi
           if [ -f stil.css ] && [ ! -f style.css ]; then cp stil.css style.css; fi
           if [ -f sürüm.json ] && [ ! -f version.json ]; then cp sürüm.json version.json; fi
@@ -44,6 +43,54 @@ jobs:
           if [ -f uygulama.js ] && [ ! -f app.js ]; then cp uygulama.js app.js; fi
           test -f main.dart.js
           touch .nojekyll
+
+      - name: Flutter kur
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Eksik ikon ve font assetlerini tamamla
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/fonts
+          mkdir -p assets/packages/cupertino_icons/assets
+          mkdir -p assets/shaders
+
+          MATERIAL_FONT="$FLUTTER_ROOT/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf"
+          test -f "$MATERIAL_FONT"
+          cp "$MATERIAL_FONT" assets/fonts/MaterialIcons-Regular.otf
+
+          TMP_DIR=$(mktemp -d)
+          cat > "$TMP_DIR/pubspec.yaml" <<'EOF'
+          name: pro_erp_web_assets
+          environment:
+            sdk: '>=3.0.0 <4.0.0'
+          dependencies:
+            cupertino_icons: any
+          EOF
+          (cd "$TMP_DIR" && flutter pub get)
+          CUPERTINO_FONT=$(find "$HOME/.pub-cache" -path '*/cupertino_icons-*/assets/CupertinoIcons.ttf' | head -1)
+          test -n "$CUPERTINO_FONT"
+          cp "$CUPERTINO_FONT" assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+
+          cat > assets/FontManifest.json <<'EOF'
+          [{"family":"MaterialIcons","fonts":[{"asset":"fonts/MaterialIcons-Regular.otf"}]},{"family":"packages/cupertino_icons/CupertinoIcons","fonts":[{"asset":"packages/cupertino_icons/assets/CupertinoIcons.ttf"}]}]
+          EOF
+
+          printf '%s' '"DQEHMnBhY2thZ2VzL2N1cGVydGlub19pY29ucy9hc3NldHMvQ3VwZXJ0aW5vSWNvbnMudHRmDAENAQcFYXNzZXQHMnBhY2thZ2VzL2N1cGVydGlub19pY29ucy9hc3NldHMvQ3VwZXJ0aW5vSWNvbnMudHRm"' > assets/AssetManifest.bin.json
+          printf '%s' 'DQEHMnBhY2thZ2VzL2N1cGVydGlub19pY29ucy9hc3NldHMvQ3VwZXJ0aW5vSWNvbnMudHRmDAENAQcFYXNzZXQHMnBhY2thZ2VzL2N1cGVydGlub19pY29ucy9hc3NldHMvQ3VwZXJ0aW5vSWNvbnMudHRm' | base64 -d > assets/AssetManifest.bin
+
+          if [ -f "$FLUTTER_ROOT/packages/flutter/lib/src/material/shaders/ink_sparkle.frag" ]; then
+            cp "$FLUTTER_ROOT/packages/flutter/lib/src/material/shaders/ink_sparkle.frag" assets/shaders/ink_sparkle.frag
+          fi
+          if [ -f "$FLUTTER_ROOT/packages/flutter/lib/src/material/shaders/stretch_effect.frag" ]; then
+            cp "$FLUTTER_ROOT/packages/flutter/lib/src/material/shaders/stretch_effect.frag" assets/shaders/stretch_effect.frag
+          fi
+
+          test -s assets/fonts/MaterialIcons-Regular.otf
+          test -s assets/FontManifest.json
 
       - name: Pages yapilandir
         uses: actions/configure-pages@v5

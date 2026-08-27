@@ -3,10 +3,13 @@ name: PRO ERP Web Yayinla
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -24,29 +27,7 @@ jobs:
       - name: Depoyu al
         uses: actions/checkout@v4
 
-      - name: PRO ERP 2.5.35 web paketini aktar
-        env:
-          WEB_ZIP_URL: 'https://sdmntprpolandcentral.oaiusercontent.com/files/00000000-5ddc-820a-b35c-98fe36665cf8/raw?se=2026-08-26T23%3A06%3A33Z&sp=r&sv=2026-02-06&sr=b&scid=01a0404d-8577-73f7-b2b2-bc208c002251&skoid=b5d2651b-fef3-4bb0-a03b-ca59cc22929b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-26T19%3A13%3A20Z&ske=2026-08-27T19%3A13%3A20Z&sks=b&skv=2026-02-06&sig=L/m9a%2B2HD47b6jFbEI3rm7pBqNX1T/nyMxAynoADQlk%3D'
-        shell: bash
-        run: |
-          set -euo pipefail
-          STAGE_DIR=$(mktemp -d)
-          curl --fail --location --silent --show-error "$WEB_ZIP_URL" -o "$STAGE_DIR/web.zip"
-          mkdir "$STAGE_DIR/site"
-          unzip -q "$STAGE_DIR/web.zip" -d "$STAGE_DIR/site"
-          test -f "$STAGE_DIR/site/index.html"
-          test -f "$STAGE_DIR/site/main.dart.js"
-          touch "$STAGE_DIR/site/.nojekyll"
-          rsync -a "$STAGE_DIR/site/" ./
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- .nojekyll _headers _redirects app.js assets canvaskit favicon.png flutter.js flutter_bootstrap.js flutter_service_worker.js icons index.html main.dart.js manifest.json style.css version.json
-          if ! git diff --cached --quiet; then
-            git commit -m "deploy: PRO ERP 2.5.35 AutoParts"
-            git push origin HEAD:main
-          fi
-
-      - name: Web dosyalarini dogrula
+      - name: PRO ERP 2.5.35 web dosyalarini dogrula
         shell: bash
         run: |
           set -euo pipefail
@@ -57,6 +38,7 @@ jobs:
           test -f flutter_service_worker.js
           test -f assets/AssetManifest.bin.json
           test -f canvaskit/canvaskit.wasm
+          grep -q '<base href="/pro-erp-unal-web/">' index.html
           grep -q '"version":"2.5.35"' version.json
 
       - name: Pages yapilandir

@@ -44,12 +44,10 @@ _flutter.buildConfig = {"engineRevision":"5d531788691ec3404cac0cee66ead4007b1773
 // GitHub Pages ve tarayıcı önbelleğinde eski uygulama kodunun kalmasını önler.
 for (const build of _flutter.buildConfig.builds) {
   if (build.mainJsPath === 'main.dart.js') {
-    build.mainJsPath = 'main.dart.js?v=20260815-2';
+    build.mainJsPath = 'main.dart.js?v=20260827-2';
   }
 }
 
-_flutter.loader.load({
-  serviceWorkerSettings: {
-    serviceWorkerVersion: "3392861322" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */
-  }
-});
+// GitHub Pages'te eski derleme önbelleğinin canlı uygulamayı boş bırakmasını
+// önlemek için Flutter service worker kaydı yapılmaz.
+_flutter.loader.load();

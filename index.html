@@ -23,6 +23,48 @@
 </head>
 
 <body>
-  <script src="flutter_bootstrap.js?v=20260827-1" async></script>
+  <script>
+    (() => {
+      const resetVersion = "20260827-2";
+      const resetKey = "pro-erp-cache-reset";
+
+      const loadApp = () => {
+        const script = document.createElement("script");
+        script.src = "flutter_bootstrap.js?v=20260827-2";
+        script.async = true;
+        document.body.appendChild(script);
+      };
+
+      const bootstrap = async () => {
+        if (localStorage.getItem(resetKey) !== resetVersion) {
+          const hadController =
+            "serviceWorker" in navigator && navigator.serviceWorker.controller;
+
+          if ("serviceWorker" in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(
+              registrations.map((registration) => registration.unregister()),
+            );
+          }
+
+          if ("caches" in window) {
+            const keys = await caches.keys();
+            await Promise.all(keys.map((key) => caches.delete(key)));
+          }
+
+          localStorage.setItem(resetKey, resetVersion);
+
+          if (hadController) {
+            window.location.reload();
+            return;
+          }
+        }
+
+        loadApp();
+      };
+
+      bootstrap().catch(loadApp);
+    })();
+  </script>
 </body>
 </html>

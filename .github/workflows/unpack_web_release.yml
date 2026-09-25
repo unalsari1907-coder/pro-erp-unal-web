@@ -27,7 +27,7 @@ jobs:
       - name: Depoyu al
         uses: actions/checkout@v4
 
-      - name: PRO ERP 2.5.35 web dosyalarini dogrula
+      - name: PRO ERP 2.5.40 web dosyalarini dogrula
         shell: bash
         run: |
           set -euo pipefail
@@ -39,7 +39,7 @@ jobs:
           test -f assets/AssetManifest.bin.json
           test -f canvaskit/canvaskit.wasm
           grep -q '<base href="/pro-erp-unal-web/">' index.html
-          grep -q '"version":"2.5.35"' version.json
+          grep -q '"version":"2.5.40"' version.json
 
       - name: Pages yapilandir
         uses: actions/configure-pages@v5

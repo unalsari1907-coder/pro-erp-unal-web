@@ -43489,13 +43489,13 @@ _.d=d
 _.e=e
 _.f=f},
 atE:function atE(a){this.a=a},
-c4R(a){var s,r,q=new A.aD_(),p=a.h(0,"oem")
-p=B.e.B(A.f(p==null?"":p))
-s=q.$1(a.h(0,"sources"))
-r=q.$1(a.h(0,"brands"))
-q.$1(a.h(0,"positions"))
+c4R(a){var s,r,q,p=new A.aD_(),o=a.h(0,"oem")
+o=B.e.B(A.f(o==null?"":o))
+s=p.$1(a.h(0,"sources"))
+r=p.$1(a.h(0,"brands"))
+p=p.$1(a.h(0,"positions"))
 q=a.h(0,"confidence")
-return new A.vQ(p,s,r,A.f(q==null?"candidate":q))},
+return new A.vQ(o,s,r,p,A.f(q==null?"candidate":q))},
 Nq(a){var s=0,r=A.q(t.N),q,p,o,n
 var $async$Nq=A.m(function(b,c){if(b===1)return A.n(c,r)
 for(;;)switch(s){case 0:n=$.bHH().as
@@ -43582,11 +43582,12 @@ s=1
 break
 case 1:return A.o(q,r)}})
 return A.p($async$aD5,r)},
-vQ:function vQ(a,b,c,d){var _=this
+vQ:function vQ(a,b,c,d,e){var _=this
 _.a=a
 _.b=b
 _.c=c
-_.e=d},
+_.d=d
+_.e=e},
 aD_:function aD_(){},
 aD0:function aD0(){},
 aD1:function aD1(){},
@@ -172239,11 +172240,11 @@ A.bgz.prototype={
 $2(a,b){return B.bO},
 $S:16}
 A.bgy.prototype={
-$2(a,b){var s,r=null,q=this.a.a.a[b],p=q.e==="api",o=B.e.bk(q.e,"verified")&&!B.e.n(q.e,"product-oem"),n=q.e==="verified-product-oem",m=this.b,l=m.n(0,q.a),k=A.e(q.a,r,r,r,r,B.hp,r,r,r),j=B.i.aj(q.b,", "),i=q.c.length===0?"":" \u2022 "+B.i.aj(q.c,", ")
+$2(a,b){var s,r=null,q=this.a.a.a[b],p=q.e==="api",o=B.e.bk(q.e,"verified")&&!B.e.n(q.e,"product-oem"),n=q.e==="verified-product-oem",m=this.b,l=m.n(0,q.a),k=A.e(q.a,r,r,r,r,B.hp,r,r,r),j=B.i.aj(q.b,", "),i=q.d.length===0?"":" \u2022 TARAF: "+B.i.aj(q.d,", "),h=q.c.length===0?"":" \u2022 "+B.i.aj(q.c,", ")
 if(p)s=" \u2022 API DO\u011eRULAMALI"
 else if(o)s=" \u2022 REPXPERT \xc7OK MARKA DO\u011eRULAMALI"
 else s=n?" \u2022 ePER \xdcR\xdcN DO\u011eRULAMALI":" \u2022 ADAY \u2014 KONTROL ED\u0130N"
-return A.au0(r,new A.bgw(this.c,m,q),r,A.e(j+i+s,r,r,r,r,r,r,r,r),k,l)},
+return A.au0(r,new A.bgw(this.c,m,q),r,A.e(j+i+h+s,r,r,r,r,r,r,r,r),k,l)},
 $S:918}
 A.bgw.prototype={
 $1(a){return this.a.$1(new A.bgv(a,this.b,this.c))},

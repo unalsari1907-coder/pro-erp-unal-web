@@ -45,6 +45,6 @@ for (const build of _flutter.buildConfig.builds) {
 
 _flutter.loader.load({
   serviceWorkerSettings: {
-    serviceWorkerVersion: "2816281278" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */
+    serviceWorkerVersion: "3155951906" /* Flutter's service worker is deprecated and will be removed in a future Flutter release. */
   }
 });

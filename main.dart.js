@@ -154263,7 +154263,7 @@ if(B.e.n(s,"BOR\xc7"))return B.b4
 return B.bg},
 F9(a){var s=J.w(a),r=this.iM(s.h(a,"bakiye")),q=this.fh(s.h(a,"cari_tipi")).toUpperCase()
 if(r===0)return"HESAP KAPALI"
-if(B.e.n(q,"TEDARIK")||B.e.n(q,"TEDAR\u0130K"))return r>0?"TEDAR\u0130K\xc7\u0130YE BOR\xc7LUYUZ":"TEDAR\u0130K\xc7\u0130DEN ALACAKLIYIZ"
+if(B.e.n(q,"TEDARIK")||B.e.n(q,"TEDAR\u0130K"))return r>0?"TEDAR\u0130K\xc7\u0130DEN ALACAKLIYIZ":"TEDAR\u0130K\xc7\u0130YE BOR\xc7LUYUZ"
 return r>0?"M\xdc\u015eTER\u0130DEN ALACAKLIYIZ":"M\xdc\u015eTER\u0130YE BOR\xc7LUYUZ"},
 gaBX(){var s=this.y
 return new A.O(s,new A.b7u(),A.E(s).i("O<1>")).gu(0)},
